@@ -1,0 +1,111 @@
+<html>
+	<head>
+	<link rel="stylesheet" type="text/css" href="bootsrap.css">
+	<title>SaintBlu * Restricted Site</title>
+	<link rel="shortcut icon" href="/favicon.ico" >
+	<style type="text/css">
+
+	body {
+		background-image:url('Bg1.png');
+		background-repeat: repeat-x;
+		background-attachment: fixed;
+		background-position: top;
+		}
+
+	backgorund {
+		background-color:#adc0c7;
+		
+		}	
+	
+	div {
+		font-family: calibri,verdana,Arial,Helvetica,sans-serif;
+		font-size: 19px;
+		color: #039;
+		}
+		
+	a:link {
+		text-decoration: none;
+		color: #039
+		}
+		
+	a:visited {
+		text-decoration: none;
+		}
+		
+	a:hover {
+		text-decoration: none;
+		color: white;
+		background-color: #29A329;
+		}	
+</style>
+<!--link rel="stylesheet" href="/wp-content/themes/sosvia/style_raul.css" type="text/css" media="screen" / -->
+<script type='text/javascript' src='/wp-includes/js/jquery/jquery.js?ver=1.4.2'></script>
+<script type='text/javascript' src="/wp-includes/js/jquery/jquery.cookie.js"></script>
+<script>
+    // Build the URL to query
+    var url = "http://www.geoplugin.net/json.gp?jsoncallback=?";
+    var country = "US";
+    var esCountries = "AR,BZ,BO,BR,CL,CO,CR,CU,DO,EC,SV,GQ,GT,HN,MX,NI,PA,PY,PE,ES,CH,TT,UY,VE";
+    // Utilize the JSONP API
+    //jQuery(document).ready(function () {
+    getCountry();
+    //});    
+
+    function getCountry() {
+        if (jQuery.cookie("lang") != null) {
+            country = jQuery.cookie("lang");
+            if (esCountries.indexOf(country) != -1) {
+                //redirect to es site
+                //top.location.href = "/restricted/es/index.php?url=";
+            }
+        } else {
+            jQuery.getJSON(url, function (data) {
+                country = data['geoplugin_countryCode'];
+                //add cookie so we only lookup once
+                jQuery.cookie("lang", country);
+                if (esCountries.indexOf(country) != -1) {                                        
+                    //redirect to es site
+                    //top.location.href = "/restricted/es/index.php?url=";
+                }
+            });
+        }
+    }
+</script>
+</head>
+
+<body bgcolor="#adc0c7" style="text-align=center">
+
+
+
+<div name="logo" style="z-index: 2; position: absolute; left: 0px; top: 100px; width: 100%;">
+<center><img src="log.png"></a></center>
+</div>
+
+<div name="imagen" style="z-index: 2; position: absolute; right: 150px; top: 250px; width: 100%;"> 
+<center><img src="2.png"></a></center>
+
+<div name="texto" style="z-index: 2; position: absolute; left: 235px; top:-25px; width: 100%;">
+<center><h1 style="color:white;">Inappropriate Page</h1><p style="color:black; ">Inappropriate Page the URL you requested,<br> contains inappropriate information and it was<br> restricted by SaintBlu.</p></a></center>
+</div>
+
+<!--div name="contact" style="z-index: 2; position: absolute; left: 100px; top: 130%; width: 100%;">
+<center><a href="contact.php">Contact Us</a></center>
+</div>
+
+<div name="about" style="z-index: 2; position: absolute; left: 150px; top: 130%; width: 130%;">
+<center><a href="about.php">About Us</a></center>
+</div-->
+
+<div name="BottomBar" style="z-index: 2; position: absolute; left: 0px; bottom: 17%; width: 100%;">
+</div>
+</div>
+
+<div style="margin: 335px auto 0; width:220px">
+<br><br><br>
+<a href="contact.php">Contact Us</a>
+<a href="about.php" style="float:right">About Us</a>
+</div>
+
+</body>
+
+</html>
