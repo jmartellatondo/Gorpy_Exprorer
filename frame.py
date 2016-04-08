@@ -1,10 +1,10 @@
-from Tkinter import *
+from tkinter import *
 from PIL import Image, ImageTk
 import os
 import string
 from TileItem import *
 from pprint import pprint
-import magic
+#import magic
 #from ctypes import windll
 
 class m_r():
@@ -79,34 +79,37 @@ class Application(Frame):
         drives = []
         #bitmask = windll.kernel32.GetLogicalDrives()
         for letter in ['%s:' % d for d in string.ascii_uppercase if os.path.exists('%s:' % d)]:
-            
-            w = Button(self.parent, compound="top",fore='#ffffff',borderwidth=0,padx = 10, text=letter)
-            w.grid(row=index,column=0,padx=2, pady=2)
-            w.configure(image=self.dev,bg= '#7e3878',width="86",height="70")
-            
+            self.drive(letter,panel,index)
+            index=(1+index)
+    def drive(self,letter,panel,index):
+        w = Button(panel, compound="top",fore='#ffffff',borderwidth=0,padx = 10, text=letter,command=lambda:self.get_ruta('%s\\' % letter))
+        w.grid(row=index,column=0,padx=2, pady=2)
+        w.configure(image=self.dev,bg= '#2b5797',width="86",height="70")
+        
 
     def get_ruta(self,url):
         self.ruta_value.set(url)
-
+        for item in self.m1.grid_slaves():
+            item.grid_forget()
         
-
-        self.img_folder = ImageTk.PhotoImage(Image.open('Folder-New-01-48.png'))
-        m1 = PanedWindow(self.parent)
-        m1.configure(bg= '#ffffff',width="150",height="50")
-        m1.grid(row=1,column=1,sticky=NW)
-        scrollbar = Scrollbar(m1)
+        self.m1.configure(bg= '#ffffff',width="150",height="50")
+        self.m1.grid(row=1,column=1,sticky=NW)
+        scrollbar = Scrollbar(self.m1)
         #scrollbar.grid(sticky=E, row =0 , rowspan = 100, column = 1, ipady = 1000)
         #scrollbar.pack(side=RIGHT, fill=Y)
 
         index=1
         for f in self.get_filepaths(url):
-            TileItem([self,index,f,m1])
+            TileItem([self,index,f,self.m1,url])
             index=(1+index)
+            
     def dir_callback(self,data):
         self.get_ruta(self.Ruta.get()+"/"+data)
 
     def initUI(self):
         
+        self.img_folder = ImageTk.PhotoImage(Image.open('Folder-New-01-48.png'))
+        self.m1 = PanedWindow(self.parent)
         self.menutools()
         self.menu_rich()
         
@@ -118,7 +121,7 @@ class Application(Frame):
         # Walk the tree.
         for  files in os.listdir(directory):
             file_paths.append(files)
-            print files
+            #print files
             #for filename in files:
                 # Join the two strings in order to form the full filepath.
             #    filepath = filename
